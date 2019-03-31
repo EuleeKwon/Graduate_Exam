@@ -19,24 +19,19 @@ df = pd.read_excel('./keys_per_year/keyword_year1.xlsx')
 # print(len(list_year))
 # print(pd.DataFrame(df))
 
-# make dictionary
-a = {}
-
-#len(df)
-for i in range(1):
-    print(list_keyword[i][0].encode("utf-8"))
-    list_temp = list_keyword[i][0].encode("utf-8")
-    key = list_temp
+def compare(key):
+    a = {}
     a.setdefault(key,[])
     for row in range(df.shape[0]):
         for col in range(df.shape[1]):
-            if df.get_value(row,col) == list_temp:  # compare keyword and whole file
+            if df.get_value(row,col) == list_temp:  # compare keyword with whole file
                 year = df.iloc[row,1]
                 a[key].append(year)  # save years in dictionary with key(keyword)
                 break
     print(a)
+    return a
 
-
+'''
 row = 0
 col = 0
 for keyword in a.keys():
@@ -46,3 +41,16 @@ for keyword in a.keys():
         worksheet.write(row, col+1, item)
         row += 1
 workbook.close()
+'''
+
+data = []
+#len(df)
+for i in range(2):
+    print(list_keyword[i][0].encode("utf-8"))
+    list_temp = list_keyword[i][0].encode("utf-8")
+    key = list_temp
+    temp = compare(list_temp)
+    print(type(temp))
+    data.setdefault(key, temp)
+    data = data.update(data)
+print(data)
